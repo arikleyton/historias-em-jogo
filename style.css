@@ -1,0 +1,184 @@
+:root {
+    --primary-blue: #0b5394;
+    --secondary-blue: #1472c2;
+    --accent-orange: #f26b38;
+    --bg-color: #f4f8fa;
+    --text-dark: #2c3e50;
+    --text-light: #7f8c8d;
+    --border-color: #d1d8dd;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Escala fluida: a fonte base altera de acordo com a largura da tela */
+html {
+    font-size: clamp(10px, 1.1vw + 4px, 16px);
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    background-color: #1a1a1a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Container travado na proporção 16:9 */
+.app-container {
+    width: 100vw;
+    height: 56.25vw;
+    max-height: 100vh;
+    max-width: 177.78vh;
+    background-color: var(--bg-color);
+    background-image: radial-gradient(#e0e7eb 2px, transparent 2px);
+    background-size: 30px 30px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.8);
+}
+
+/* Cabeçalho acompanhando escala */
+header {
+    background-color: #ffffff;
+    height: 12%;
+    min-height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2%;
+    border-bottom: 2px solid var(--primary-blue);
+    z-index: 10;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.header-left, .header-right {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    gap: 1rem;
+}
+
+.project-logo, .ifpa-logo {
+    height: 75%;
+    max-height: 60px;
+    object-fit: contain;
+}
+
+.header-titles {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.header-titles .subtitle { font-size: 0.8rem; font-weight: 700; color: var(--accent-orange); text-transform: uppercase; }
+.header-titles .title { font-size: 1.4rem; font-weight: 800; color: var(--primary-blue); line-height: 1.1;}
+
+/* Layout Principal */
+.main-content { display: flex; flex: 1; overflow: hidden; position: relative; }
+
+/* Sidebar Escalonável */
+.sidebar {
+    width: 25%;
+    min-width: 18rem;
+    background: transparent;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 2% 0 2% 2%;
+    transition: transform 0.3s ease, width 0.3s ease;
+    position: relative;
+    z-index: 5;
+}
+
+.sidebar.collapsed { transform: translateX(-100%); position: absolute; }
+
+.sidebar-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; }
+.sidebar-header .line { width: 2rem; height: 3px; background-color: var(--accent-orange); }
+.sidebar-header h2 { font-size: 1rem; font-weight: 700; color: var(--primary-blue); text-transform: uppercase; }
+
+.journey-list { list-style: none; overflow-y: auto; flex: 1; padding-right: 10px; position: relative; scrollbar-width: none; }
+.journey-list::-webkit-scrollbar { display: none; }
+.journey-list::before { content: ''; position: absolute; top: 1.2rem; bottom: 1.5rem; left: 2.3rem; width: 2px; background-color: var(--border-color); z-index: 0; }
+
+.journey-item { display: flex; align-items: flex-start; margin-bottom: 1.5rem; position: relative; z-index: 1; cursor: pointer; opacity: 0.7; transition: opacity 0.2s; }
+.journey-item:hover, .journey-item.active { opacity: 1; }
+.journey-item.locked { opacity: 0.4; cursor: not-allowed; }
+
+.node-container { width: 4.8rem; display: flex; justify-content: center; position: relative; }
+.node { width: 2.5rem; height: 2.5rem; border-radius: 50%; background-color: #e2e8f0; color: var(--text-light); display: flex; justify-content: center; align-items: center; font-weight: 700; font-size: 1.1rem; border: 3px solid var(--bg-color); z-index: 2; transition: all 0.2s;}
+.journey-item.active .node { background-color: var(--primary-blue); color: white; transform: scale(1.1); }
+
+.item-details-wrapper { padding: 0 0.5rem; display: flex; flex-direction: column; justify-content: center; width: calc(100% - 4.8rem); transition: all 0.2s;}
+.journey-item.active .item-details-wrapper { border: 1px solid var(--primary-blue); border-radius: 2rem; padding: 0.5rem 1rem; background-color: rgba(255, 255, 255, 0.8); margin-top: -0.5rem; margin-left: -0.5rem; }
+
+.item-status { font-size: 0.65rem; color: var(--accent-orange); font-weight: 800; text-transform: uppercase; display: none; margin-bottom: 2px; }
+.journey-item.active .item-status { display: block; }
+.item-title { font-size: 1.05rem; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.journey-item.active .item-title { color: var(--primary-blue); }
+.item-subtitle { font-size: 0.85rem; color: var(--text-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.journey-item.locked .node { background-color: #cbd5e1; color: transparent; }
+.journey-item.locked .node::after { content: '🔒'; position: absolute; font-size: 0.8rem; color: #64748b; }
+
+/* Área de Conteúdo Isolada */
+.content-area {
+    flex: 1;
+    padding: 2%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Botão Flutuante (não atrapalha o alinhamento da div) */
+.toggle-btn {
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    background: var(--primary-blue);
+    color: white;
+    border: none;
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: background 0.2s, transform 0.2s;
+    z-index: 20;
+}
+.toggle-btn:hover { background: var(--secondary-blue); transform: scale(1.05); }
+
+/* DIV que recebe o conteúdo externo */
+#dynamic-content {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    overflow: hidden;
+    position: relative;
+}
+
+#content-frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background-color: transparent;
+}
+
+@media (max-width: 800px) {
+    .sidebar { position: absolute; background: rgba(244, 248, 250, 0.95); box-shadow: 2px 0 10px rgba(0,0,0,0.1); backdrop-filter: blur(5px); }
+}
