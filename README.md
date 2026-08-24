@@ -43,7 +43,7 @@ Este projeto adota um modelo de **licenciamento duplo** para proteger tanto a te
 ## 👨‍🏫 Coordenação e Equipe
 
 - **Prof. Arikleyton de Oliveira Ferreira** - Coordenação
-- - *Prof. Tayanná Santos de Jesus Sbrana* - Colaboradora
+- *Prof. Tayanná Santos de Jesus Sbrana* - Colaboradora
 - *Cauã Muniz Castro (TADS2026)* - Arte e design dos capítulos 1, 7 e 8
 - *Diogo Caldeira Miranda dos Santos (TADS2025)* - Arte e design do capítulo 4
 - *Kauê Vinicius Sousa Fonseca (TADS2026)* - Arte e design dos capítulos 9, 10 e 11
