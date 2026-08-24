@@ -31,7 +31,7 @@ Como o projeto utiliza a biblioteca Phaser para carregar texturas e recursos de 
 
 Contribuições de educadores, alunos e desenvolvedores são muito bem-vindas, seja na melhoria do código, refinamento visual ou elaboração de novos roteiros históricos!
 
-Entre em contato para mais detalhes (arikleton.ferreira@ifpa.edu.br).
+Entre em contato para mais detalhes (arikleyton.ferreira@ifpa.edu.br).
 
 ## 📄 Licença
 
