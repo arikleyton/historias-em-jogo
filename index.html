@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórias em Jogo - Descobrimento do Brasil</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <!-- Cabeçalho -->
+        <header>
+            <div class="header-left">
+                <img src="Logo2-removebg-preview.png" alt="Histórias em Jogo Logo" class="project-logo">
+                <div class="header-titles">
+                    <span class="subtitle">Histórias em Jogo</span>
+                    <h1 class="title">Descobrimento do Brasil</h1>
+                </div>
+            </div>
+            <div class="header-right">
+                <img src="LOGO_IFPA_PARAGOMINAS_2.png" alt="Instituto Federal do Pará - Campus Paragominas" class="ifpa-logo">
+            </div>
+        </header>
+
+        <!-- Corpo da Página -->
+        <div class="main-content">
+            
+            <!-- Lista Lateral Esquerda -->
+            <aside class="sidebar" id="sidebar">
+                <div class="sidebar-header">
+                    <div class="line"></div>
+                    <h2>Índice da Jornada</h2>
+                </div>
+                
+                <ul class="journey-list" id="journey-list">
+                    <!-- Gerado pelo script.js -->
+                </ul>
+            </aside>
+
+            <!-- Área de Conteúdo Principal -->
+            <main class="content-area">
+                <!-- Botão Toggle posicionado absolutamente para não interferir na DIV -->
+                <button class="toggle-btn" id="toggle-btn" onclick="toggleSidebar()" title="Mostrar/Ocultar Menu">
+                    ☰ 
+                </button>
+
+                <!-- DIV preparada para receber conteúdo externo -->
+                <div id="dynamic-content">
+                    <iframe id="content-frame" src="capitulos/00/cap00.html" title="Conteúdo do Capítulo" frameborder="0"></iframe>
+                </div>
+            </main>
+            
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

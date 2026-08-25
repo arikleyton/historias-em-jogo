@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entre Duas Línguas</title>
+
+<style>
+/* =========================================================
+   VARIÁVEIS & RESET
+========================================================= */
+
+:root {
+    --bg-main: #edf4eb;
+    --surface: #ffffff;
+    --surface-card: #f9fbf8;
+    
+    --primary: #1e4d35;
+    --primary-light: #2d6a4a;
+    --primary-dark: #123322;
+    
+    --accent-gold: #d99b26;
+    
+    --text-primary: #1f2923;
+    --text-secondary: #5a665e;
+    --text-muted: #8a968f;
+    
+    --border-color: #dce4db;
+    --border-radius-lg: 20px;
+    --border-radius-md: 12px;
+    
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+    --shadow-md: 0 8px 24px rgba(23, 61, 43, 0.08);
+    --shadow-lg: 0 16px 40px rgba(0,0,0,0.12);
+
+    --success-bg: #e8f5e9;
+    --success-border: #81c784;
+    --success-text: #1b5e20;
+
+    --danger-bg: #ffebee;
+    --danger-border: #e57373;
+    --danger-text: #b71c1c;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: var(--text-primary);
+    background-color: var(--bg-main);
+    background-image: 
+        radial-gradient(at 0% 0%, rgba(62, 135, 81, 0.08) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(228, 170, 59, 0.08) 0px, transparent 50%);
+    line-height: 1.5;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+header {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+    color: white;
+    padding: 36px 20px 42px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.header-inner {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+header h1 {
+    font-size: clamp(2rem, 4.5vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+}
+
+header p {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+}
+
+/* =========================================================
+   LAYOUT PRINCIPAL
+========================================================= */
+
+main {
+    max-width: 840px;
+    margin: -20px auto 40px;
+    padding: 0 16px;
+    position: relative;
+    z-index: 10;
+}
+
+/* =========================================================
+   MEDIDOR DE PROGRESSO
+========================================================= */
+
+.comprehension {
+    background: var(--surface);
+    border-radius: var(--border-radius-lg);
+    padding: 20px 24px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-color);
+    margin-bottom: 20px;
+}
+
+.meter-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.meter-title h2 {
+    font-size: 1.1rem;
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.meter-title span {
+    font-size: 0.825rem;
+    color: var(--text-muted);
+}
+
+#percentage {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--accent-gold);
+    transition: color 0.3s ease;
+}
+
+.meter {
+    height: 12px;
+    background: #e2e8e4;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.meter-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #e57373 0%, #ffb74d 50%, #81c784 100%);
+    border-radius: 10px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.meter-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+/* =========================================================
+   CARTÃO DO JOGO
+========================================================= */
+
+.game {
+    background: var(--surface);
+    border-radius: var(--border-radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-color);
+}
+
+.game-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.round {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.round span {
+    background: var(--primary);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 6px;
+    margin-left: 4px;
+}
+
+/* =========================================================
+   CENÁRIO ILUSTRADO
+========================================================= */
+
+.scene {
+    position: relative;
+    height: 380px;
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    background: linear-gradient(180deg, #a0d8ef 0%, #e0f2fe 50%, #81c784 51%, #4caf50 100%);
+    border: 1px solid var(--border-color);
+}
+
+.sun {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    right: 32px;
+    top: 24px;
+    border-radius: 50%;
+    background: #ffe082;
+    box-shadow: 0 0 20px rgba(255, 224, 130, 0.8);
+}
+
+.cloud {
+    position: absolute;
+    width: 90px;
+    height: 28px;
+    left: 10%;
+    top: 35px;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 20px;
+    animation: floatCloud 18s linear infinite;
+}
+
+.cloud::before {
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    left: 12px;
+    bottom: 4px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.85);
+}
+
+@keyframes floatCloud {
+    from { transform: translateX(-150%); }
+    to { transform: translateX(800%); }
+}
+
+.hills {
+    position: absolute;
+    width: 100%;
+    height: 100px;
+    bottom: 35%;
+}
+
+.hill {
+    position: absolute;
+    bottom: 0;
+    border-radius: 50% 50% 0 0;
+}
+
+.hill.one { left: -10%; width: 60%; height: 80px; background: #66bb6a; }
+.hill.two { right: -5%; width: 65%; height: 90px; background: #5c6bc0; opacity: 0.3; }
+
+.river {
+    position: absolute;
+    left: -10%;
+    bottom: -5px;
+    width: 120%;
+    height: 35px;
+    background: #29b6f6;
+    transform: rotate(-1deg);
+    border-top: 3px solid rgba(255, 255, 255, 0.6);
+    z-index: 1;
+}
+
+.speech {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 10px 24px;
+    border-radius: 20px;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--primary-dark);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    z-index: 30;
+    animation: floatSpeech 3s ease-in-out infinite;
+}
+
+.speech::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 8px 8px 0;
+    border-style: solid;
+    border-color: white transparent;
+    display: block;
+    width: 0;
+}
+
+@keyframes floatSpeech {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-4px); }
+}
+
+/* =========================================================
+   PERSONAGENS
+========================================================= */
+
+.characters {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 85%;
+    max-width: 520px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    z-index: 10;
+}
+
+.person-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 110px;
+}
+
+/* ROSTO & EXPRESSÃO */
+.head-box {
+    position: relative;
+    width: 56px;
+    height: 60px;
+    border-radius: 24px;
+    z-index: 3;
+}
+
+.face-features {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+}
+
+.eye {
+    position: absolute;
+    width: 7px;
+    height: 9px;
+    background: #111;
+    border-radius: 50%;
+    top: 22px;
+}
+.eye::after {
+    content: "";
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    top: 1px;
+    right: 1px;
+}
+.eye.left { left: 13px; }
+.eye.right { right: 13px; }
+
+.nose {
+    position: absolute;
+    width: 5px;
+    height: 7px;
+    border-right: 2px solid rgba(0,0,0,0.25);
+    border-bottom: 2px solid rgba(0,0,0,0.25);
+    border-radius: 2px;
+    top: 30px;
+    left: 25px;
+}
+
+.mouth {
+    position: absolute;
+    width: 14px;
+    height: 5px;
+    border-bottom: 2px solid #4a2015;
+    border-radius: 50%;
+    top: 40px;
+    left: 21px;
+}
+
+/* TRONCO E BRAÇOS */
+.torso-box {
+    position: relative;
+    width: 60px;
+    height: 70px;
+    margin-top: -6px;
+    z-index: 2;
+}
+
+.arm {
+    position: absolute;
+    top: 4px;
+    width: 14px;
+    height: 55px;
+    border-radius: 7px;
+    z-index: 1;
+}
+.arm.left { left: -10px; transform: rotate(8deg); }
+.arm.right { right: -10px; transform: rotate(-8deg); }
+
+/* PERNAS */
+.legs-box {
+    display: flex;
+    justify-content: space-between;
+    width: 38px;
+    height: 55px;
+    margin-top: -4px;
+    z-index: 1;
+}
+
+.leg {
+    position: relative;
+    width: 16px;
+    height: 100%;
+    border-radius: 4px 4px 2px 2px;
+}
+
+.foot {
+    position: absolute;
+    bottom: 0;
+    width: 20px;
+    height: 8px;
+    border-radius: 4px;
+}
+.leg.left .foot { left: -4px; }
+.leg.right .foot { right: -4px; }
+
+
+/* --- INDÍGENA --- */
+.indigenous .head-box {
+    background: #b86b43;
+}
+
+.indigenous .headdress {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 2px;
+    z-index: 4;
+}
+
+.feather {
+    width: 9px;
+    height: 24px;
+    border-radius: 50% 50% 0 0;
+}
+.feather:nth-child(1) { background: #e65100; transform: rotate(-12deg); }
+.feather:nth-child(2) { background: #fbc02d; transform: translateY(-4px); }
+.feather:nth-child(3) { background: #0288d1; transform: rotate(12deg); }
+
+.indigenous .face-paint {
+    position: absolute;
+    width: 40px;
+    height: 5px;
+    background: #d32f2f;
+    top: 26px;
+    left: 8px;
+    border-radius: 3px;
+    opacity: 0.9;
+    z-index: 6;
+}
+
+.indigenous .torso-box {
+    background: #aa5c35;
+    border-radius: 12px 12px 4px 4px;
+}
+
+.indigenous .skirt {
+    position: absolute;
+    bottom: -8px;
+    left: -4px;
+    width: 68px;
+    height: 26px;
+    background: #795548;
+    border-radius: 3px 3px 8px 8px;
+    z-index: 3;
+}
+
+.indigenous .arm { background: #b86b43; }
+.indigenous .leg { background: #aa5c35; }
+.indigenous .foot { background: #8d4727; }
+
+
+/* --- PORTUGUÊS (SÉCULO XVI RENASCENTISTA) --- */
+.portuguese .head-box {
+    background: #f5d0a9; /* Tom de pele limpo sem manchas */
+}
+
+/* Boina Ibérica e Pena */
+.portuguese .hat-beret {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 68px;
+    height: 22px;
+    background: #5c1d24; /* Vinho nobre */
+    border-radius: 30px 30px 10px 10px;
+    z-index: 6;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.portuguese .hat-feather {
+    position: absolute;
+    top: -24px;
+    right: 12px;
+    width: 8px;
+    height: 22px;
+    background: #ffb74d;
+    border-radius: 50% 50% 0 0;
+    transform: rotate(20deg);
+    z-index: 7;
+}
+
+/* Cabelo limpo nas laterais */
+.portuguese .side-hair {
+    position: absolute;
+    top: 14px;
+    width: 8px;
+    height: 22px;
+    background: #4a2c11;
+    border-radius: 4px;
+    z-index: 2;
+}
+.portuguese .side-hair.left { left: -2px; }
+.portuguese .side-hair.right { right: -2px; }
+
+/* Cavanhaque Português */
+.portuguese .beard {
+    position: absolute;
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 10px;
+    border-bottom: 4px solid #4a2c11;
+    border-radius: 0 0 50% 50%;
+    z-index: 6;
+}
+
+/* Gola Plissada (Gorgueira de Época) */
+.portuguese .ruffle-collar {
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 52px;
+    height: 14px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: inset 0 -2px 0 #ddd, 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 5;
+}
+
+/* Colete e Roupas Época Ibérica */
+.portuguese .torso-box {
+    background: #8b0000; /* Vermelho/Vinho Português */
+    border-radius: 10px 10px 2px 2px;
+}
+
+.portuguese .doublet-buttons {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 38px;
+    border-left: 3px dotted #d99b26; /* Botões dourados */
+    z-index: 4;
+}
+
+.portuguese .belt {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background: #3e2723;
+    z-index: 3;
+}
+
+.portuguese .belt-buckle {
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 12px;
+    background: #d99b26;
+    border-radius: 2px;
+    z-index: 4;
+}
+
+.portuguese .arm { background: #6b0000; }
+.portuguese .leg { background: #2c3e50; }
+.portuguese .foot { background: #1a252f; }
+
+/* =========================================================
+   DICA E PERGUNTA
+========================================================= */
+
+.clue {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0 16px;
+    padding: 12px 16px;
+    background: #fff8e1;
+    border: 1px solid #ffe082;
+    border-radius: var(--border-radius-md);
+    color: #7f6000;
+    font-size: 0.9rem;
+}
+
+.clue-icon {
+    font-weight: 800;
+    background: #ffe082;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+}
+
+.question {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.question small {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    font-weight: 700;
+    font-size: 0.75rem;
+}
+
+.question h2 {
+    font-size: 1.3rem;
+    color: var(--primary-dark);
+}
+
+/* =========================================================
+   RESPOSTAS & BOTÕES
+========================================================= */
+
+.answers {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.answer {
+    padding: 16px;
+    background: var(--surface-card);
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+}
+
+.answer:hover:not(:disabled) {
+    border-color: var(--primary-light);
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.answer.correct {
+    background: var(--success-bg) !important;
+    border-color: var(--success-border) !important;
+    color: var(--success-text) !important;
+}
+
+.answer.wrong {
+    background: var(--danger-bg) !important;
+    border-color: var(--danger-border) !important;
+    color: var(--danger-text) !important;
+}
+
+.answer:disabled {
+    cursor: default;
+    opacity: 0.8;
+}
+
+#feedback {
+    display: none;
+    margin-top: 20px;
+    padding: 16px;
+    border-radius: var(--border-radius-md);
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+#feedback.correct-feedback {
+    display: block;
+    background: var(--success-bg);
+    border: 1px solid var(--success-border);
+    color: var(--success-text);
+}
+
+#feedback.wrong-feedback {
+    display: block;
+    background: var(--danger-bg);
+    border: 1px solid var(--danger-border);
+    color: var(--danger-text);
+}
+
+.next-btn, .restart-btn {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    background: var(--primary);
+    color: white;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.next-btn:hover, .restart-btn:hover {
+    background: var(--primary-light);
+    transform: translateY(-1px);
+}
+
+/* =========================================================
+   MODAL DE RESULTADO
+========================================================= */
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 16px;
+}
+
+.result {
+    background: var(--surface);
+    border-radius: var(--border-radius-lg);
+    padding: 36px 24px;
+    max-width: 440px;
+    width: 100%;
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+}
+
+.final-score {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--accent-gold);
+    margin: 12px 0;
+}
+
+/* =========================================================
+   RESPONSIVIDADE
+========================================================= */
+
+@media (max-width: 600px) {
+    .answers {
+        grid-template-columns: 1fr;
+    }
+    
+    .scene {
+        height: 330px;
+    }
+
+    .person-container {
+        transform: scale(0.85);
+        transform-origin: bottom center;
+    }
+}
+
+/* =========================================================
+   COMPOSICAO 16:9 — SEM BARRA DE ROLAGEM
+========================================================= */
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    min-height: 0;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+}
+
+header {
+    padding: 10px 18px 12px;
+}
+
+.header-inner {
+    max-width: 1000px;
+}
+
+header h1 {
+    font-size: clamp(1.35rem, 2.5vw, 2rem);
+    margin-bottom: 1px;
+}
+
+header p {
+    font-size: clamp(0.78rem, 1.2vw, 0.95rem);
+}
+
+main {
+    width: min(100%, 1180px);
+    max-width: 1180px;
+    height: 100%;
+    min-height: 0;
+    margin: 0 auto;
+    padding: 9px 14px 12px;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 8px;
+}
+
+.comprehension {
+    margin: 0;
+    padding: 7px 14px;
+    border-radius: 12px;
+    display: grid;
+    grid-template-columns: minmax(215px, 0.8fr) minmax(180px, 1.45fr) minmax(110px, 0.55fr);
+    align-items: center;
+    gap: 12px;
+}
+
+.meter-top {
+    margin: 0;
+    gap: 12px;
+}
+
+.meter-title h2 {
+    font-size: 0.95rem;
+}
+
+.meter-title span {
+    display: none;
+}
+
+#percentage {
+    font-size: 1.3rem;
+}
+
+.meter {
+    height: 8px;
+}
+
+.meter-labels {
+    margin: 0;
+    font-size: 0.68rem;
+    gap: 8px;
+}
+
+.game {
+    min-height: 0;
+    padding: 11px;
+    border-radius: 16px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: minmax(245px, 0.86fr) minmax(320px, 1.14fr);
+    grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+    column-gap: 14px;
+    row-gap: 7px;
+}
+
+.game-header {
+    grid-column: 1 / -1;
+    margin: 0;
+    min-height: 20px;
+}
+
+.scene {
+    grid-column: 1;
+    grid-row: 2 / 6;
+    height: auto;
+    min-height: 0;
+}
+
+.clue {
+    grid-column: 2;
+    grid-row: 2;
+    margin: 0;
+    padding: 8px 10px;
+    gap: 9px;
+    font-size: 0.82rem;
+}
+
+.clue-icon {
+    width: 22px;
+    height: 22px;
+}
+
+.question {
+    grid-column: 2;
+    grid-row: 3;
+    margin: 0;
+}
+
+.question small {
+    font-size: 0.66rem;
+}
+
+.question h2 {
+    font-size: 1.05rem;
+}
+
+.answers {
+    grid-column: 2;
+    grid-row: 4;
+    align-self: start;
+    gap: 8px;
+}
+
+.answer {
+    padding: 10px 12px;
+    min-height: 44px;
+    font-size: 0.9rem;
+}
+
+#feedback {
+    grid-column: 2;
+    grid-row: 5;
+    margin: 0;
+    padding: 9px 10px;
+    font-size: 0.82rem;
+}
+
+.next-btn {
+    margin-top: 7px;
+    padding: 7px 18px;
+}
+
+.speech {
+    font-size: clamp(1.2rem, 2.6vw, 1.6rem);
+}
+
+.intro-overlay {
+    display: flex;
+    background:
+        linear-gradient(135deg, rgba(18, 51, 34, 0.96), rgba(30, 77, 53, 0.91)),
+        radial-gradient(circle at top right, rgba(217, 155, 38, 0.35), transparent 45%);
+    z-index: 200;
+}
+
+.intro-card {
+    width: min(780px, 94vw);
+    max-height: 92vh;
+    padding: clamp(20px, 3vw, 34px);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.97);
+    box-shadow: var(--shadow-lg);
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: clamp(18px, 4vw, 38px);
+    align-items: center;
+}
+
+.intro-kicker {
+    color: var(--accent-gold);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+}
+
+.intro-copy h1 {
+    color: var(--primary-dark);
+    font-size: clamp(1.65rem, 4vw, 2.55rem);
+    line-height: 1.05;
+    margin: 8px 0 14px;
+}
+
+.intro-copy p,
+.intro-guide li {
+    color: var(--text-secondary);
+    font-size: clamp(0.86rem, 1.5vw, 1rem);
+}
+
+.intro-guide {
+    padding: 18px;
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    background: var(--surface-card);
+}
+
+.intro-guide h2 {
+    color: var(--primary);
+    font-size: 1.15rem;
+    margin-bottom: 10px;
+}
+
+.intro-guide ul {
+    padding-left: 19px;
+    display: grid;
+    gap: 7px;
+}
+
+.start-btn,
+.next-chapter-btn {
+    display: inline-block;
+    border: none;
+    border-radius: 9px;
+    background: var(--accent-gold);
+    color: #2c210d;
+    font: inherit;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.start-btn {
+    width: 100%;
+    margin-top: 16px;
+    padding: 11px 18px;
+}
+
+.result {
+    padding: 26px 22px;
+}
+
+.result-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.result-actions .restart-btn,
+.result-actions .next-chapter-btn {
+    margin: 0;
+    padding: 10px 20px;
+}
+
+.next-chapter-btn[hidden] {
+    display: none;
+}
+
+@media (max-height: 620px) {
+    header {
+        padding: 6px 14px 7px;
+    }
+
+    header p {
+        display: none;
+    }
+
+    main {
+        padding-top: 6px;
+        padding-bottom: 7px;
+        gap: 6px;
+    }
+
+    .comprehension {
+        padding-block: 5px;
+    }
+
+    .game {
+        padding: 8px;
+        row-gap: 5px;
+    }
+
+    .characters {
+        transform: translateX(-50%) scale(0.84);
+        transform-origin: bottom center;
+    }
+
+    .intro-card {
+        padding: 18px 22px;
+    }
+}
+
+@media (max-width: 560px) {
+    html,
+    body {
+        overflow: auto;
+    }
+
+    body {
+        display: block;
+    }
+
+    main {
+        height: auto;
+        display: block;
+    }
+
+    .comprehension {
+        grid-template-columns: 1fr;
+        margin-bottom: 8px;
+    }
+
+    .meter-labels {
+        display: none;
+    }
+
+    .game {
+        display: block;
+        overflow: visible;
+    }
+
+    .scene {
+        height: 300px;
+        margin-bottom: 10px;
+    }
+
+    .clue,
+    .question,
+    .answers,
+    #feedback {
+        margin-bottom: 10px;
+    }
+
+    .intro-card {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="overlay intro-overlay" id="introOverlay" role="dialog" aria-modal="true" aria-labelledby="introTitle">
+    <div class="intro-card">
+        <div class="intro-copy">
+            <span class="intro-kicker">Capítulo 4 · O Primeiro Contato</span>
+            <h1 id="introTitle">Entre Duas Línguas</h1>
+            <p>Descubra palavras de origem tupi e ajude portugueses e indígenas a superar a barreira da língua durante o primeiro contato.</p>
+        </div>
+        <div class="intro-guide">
+            <h2>Como jogar</h2>
+            <ul>
+                <li>Leia a palavra em tupi e observe a dica.</li>
+                <li>Escolha o significado correto entre quatro opções.</li>
+                <li>Alcance pelo menos 70% no Medidor de Compreensão.</li>
+            </ul>
+            <button class="start-btn" type="button" onclick="startGame()">COMEÇAR O CONTATO</button>
+        </div>
+    </div>
+</div>
+
+<header>
+    <div class="header-inner">
+        <h1>Entre Duas Línguas</h1>
+        <p>O primeiro contato começa quando alguém tenta compreender o outro.</p>
+    </div>
+</header>
+
+<main>
+    <section class="comprehension">
+        <div class="meter-top">
+            <div class="meter-title">
+                <h2>Medidor de Compreensão</h2>
+                <span>Aumente o entendimento para completar o contato</span>
+            </div>
+            <strong id="percentage">0%</strong>
+        </div>
+        <div class="meter">
+            <div class="meter-fill" id="communicationFill"></div>
+        </div>
+        <div class="meter-labels">
+            <span>0%</span>
+            <span>Meta: >70%</span>
+            <span>100%</span>
+        </div>
+    </section>
+
+    <section class="game">
+        <div class="game-header">
+            <div class="round">Palavra <span id="questionNumber">1</span> de 5</div>
+        </div>
+
+        <div class="scene">
+            <div class="sun"></div>
+            <div class="cloud"></div>
+            <div class="hills">
+                <div class="hill one"></div>
+                <div class="hill two"></div>
+            </div>
+            
+            <div class="speech" id="tupiWord">Y</div>
+            
+            <div class="characters">
+                <!-- INDÍGENA -->
+                <div class="person-container indigenous">
+                    <div class="headdress">
+                        <div class="feather"></div>
+                        <div class="feather"></div>
+                        <div class="feather"></div>
+                    </div>
+                    <div class="head-box">
+                        <div class="face-paint"></div>
+                        <div class="face-features">
+                            <div class="eye left"></div>
+                            <div class="eye right"></div>
+                            <div class="nose"></div>
+                            <div class="mouth"></div>
+                        </div>
+                    </div>
+                    <div class="torso-box">
+                        <div class="arm left"></div>
+                        <div class="arm right"></div>
+                        <div class="skirt"></div>
+                    </div>
+                    <div class="legs-box">
+                        <div class="leg left"><div class="foot"></div></div>
+                        <div class="leg right"><div class="foot"></div></div>
+                    </div>
+                </div>
+
+                <!-- PORTUGUÊS (SÉCULO XVI) -->
+                <div class="person-container portuguese">
+                    <div class="hat-feather"></div>
+                    <div class="hat-beret"></div>
+                    <div class="head-box">
+                        <div class="side-hair left"></div>
+                        <div class="side-hair right"></div>
+                        <div class="face-features">
+                            <div class="eye left"></div>
+                            <div class="eye right"></div>
+                            <div class="nose"></div>
+                            <div class="mouth"></div>
+                            <div class="beard"></div>
+                        </div>
+                    </div>
+                    <div class="torso-box">
+                        <div class="ruffle-collar"></div>
+                        <div class="doublet-buttons"></div>
+                        <div class="arm left"></div>
+                        <div class="arm right"></div>
+                        <div class="belt"></div>
+                        <div class="belt-buckle"></div>
+                    </div>
+                    <div class="legs-box">
+                        <div class="leg left"><div class="foot"></div></div>
+                        <div class="leg right"><div class="foot"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="river"></div>
+        </div>
+
+        <div class="clue">
+            <div class="clue-icon">i</div>
+            <div id="clueText">Carregando dica...</div>
+        </div>
+
+        <div class="question">
+            <small>Interpretação</small>
+            <h2>Qual é o significado desta palavra?</h2>
+        </div>
+
+        <div class="answers" id="answers"></div>
+        <div id="feedback"></div>
+    </section>
+</main>
+
+<div class="overlay" id="resultOverlay">
+    <div class="result">
+        <h2 id="resultTitle">Fim da Partida</h2>
+        <div class="final-score" id="finalPercentage">0%</div>
+        <p id="resultText"></p>
+        <div class="result-actions">
+            <button class="restart-btn" onclick="restartGame()">Jogar Novamente</button>
+            <button class="next-chapter-btn" id="nextChapterButton" onclick="goToNextChapter()" hidden>Próximo Capítulo</button>
+        </div>
+    </div>
+</div>
+
+<script>
+const wordBank = [
+    { tupi: "Y", meaning: "Água", clue: "Refere-se ao elemento vital encontrado nos rios e chuvas.", options: ["Água", "Fogo", "Pedra", "Casa"] },
+    { tupi: "Tatá", meaning: "Fogo", clue: "Produz calor e luz, essencial para cozinhar e se aquecer.", options: ["Fogo", "Peixe", "Terra", "Homem"] },
+    { tupi: "Oka", meaning: "Casa", clue: "Estrutura de abrigo onde vivem as famílias.", options: ["Casa", "Água", "Floresta", "Peixe"] },
+    { tupi: "Pirá", meaning: "Peixe", clue: "Animal aquático muito comum na alimentação local.", options: ["Peixe", "Fogo", "Mulher", "Pedra"] },
+    { tupi: "Itá", meaning: "Pedra", clue: "Material duro encontrado no solo e nas margens dos rios.", options: ["Pedra", "Casa", "Milho", "Água"] },
+    { tupi: "Ka'a", meaning: "Mato / Floresta", clue: "A vegetação densa que envolve todo o ambiente.", options: ["Mato / Floresta", "Fogo", "Peixe", "Pessoa"] },
+    { tupi: "Abá", meaning: "Pessoa / Homem", clue: "Refere-se ao ser humano ou a um homem da comunidade.", options: ["Pessoa / Homem", "Rio", "Casa", "Ave"] },
+    { tupi: "Kunhã", meaning: "Mulher", clue: "Refere-se à figura feminina da comunidade.", options: ["Mulher", "Pedra", "Floresta", "Fogo"] }
+];
+
+function shuffle(array) {
+    const copy = [...array];
+    for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+}
+
+let gameWords = shuffle(wordBank).slice(0, 5);
+let currentQuestion = 0;
+let correctAnswers = 0;
+let answered = false;
+let failedAttempts = 0;
+
+const tupiWord = document.getElementById("tupiWord");
+const clueText = document.getElementById("clueText");
+const answers = document.getElementById("answers");
+const feedback = document.getElementById("feedback");
+const percentage = document.getElementById("percentage");
+const communicationFill = document.getElementById("communicationFill");
+const questionNumber = document.getElementById("questionNumber");
+const resultOverlay = document.getElementById("resultOverlay");
+const introOverlay = document.getElementById("introOverlay");
+const nextChapterButton = document.getElementById("nextChapterButton");
+
+function startGame() {
+    introOverlay.style.display = "none";
+}
+
+function loadQuestion() {
+    answered = false;
+    feedback.style.display = "none";
+    feedback.className = "";
+    
+    const word = gameWords[currentQuestion];
+    questionNumber.textContent = currentQuestion + 1;
+    tupiWord.textContent = word.tupi;
+    clueText.textContent = word.clue;
+    answers.innerHTML = "";
+
+    shuffle(word.options).forEach(option => {
+        const button = document.createElement("button");
+        button.className = "answer";
+        button.textContent = option;
+        button.onclick = () => checkAnswer(button, option);
+        answers.appendChild(button);
+    });
+}
+
+function checkAnswer(button, selectedAnswer) {
+    if (answered) return;
+    answered = true;
+
+    const word = gameWords[currentQuestion];
+    document.querySelectorAll(".answer").forEach(btn => btn.disabled = true);
+
+    if (selectedAnswer === word.meaning) {
+        correctAnswers++;
+        button.classList.add("correct");
+        feedback.className = "correct-feedback";
+        feedback.innerHTML = `<strong>Compreensão alcançada!</strong> <strong>${word.tupi}</strong> significa <strong>${word.meaning}</strong>.`;
+    } else {
+        button.classList.add("wrong");
+        document.querySelectorAll(".answer").forEach(btn => {
+            if (btn.textContent === word.meaning) btn.classList.add("correct");
+        });
+        feedback.className = "wrong-feedback";
+        feedback.innerHTML = `<strong>Não houve entendimento.</strong> <strong>${word.tupi}</strong> significa <strong>${word.meaning}</strong>.`;
+    }
+
+    feedback.style.display = "block";
+    updateCommunication();
+
+    if (currentQuestion < gameWords.length - 1) {
+        const next = document.createElement("button");
+        next.className = "next-btn";
+        next.textContent = "Próxima Palavra";
+        next.onclick = nextQuestion;
+        feedback.appendChild(document.createElement("br"));
+        feedback.appendChild(next);
+    } else {
+        setTimeout(showResult, 1000);
+    }
+}
+
+function updateCommunication() {
+    const score = Math.round((correctAnswers / (currentQuestion + 1)) * 100);
+    percentage.textContent = score + "%";
+    communicationFill.style.width = score + "%";
+}
+
+function nextQuestion() {
+    currentQuestion++;
+    loadQuestion();
+}
+
+function showResult() {
+    const finalScore = Math.round((correctAnswers / gameWords.length) * 100);
+    document.getElementById("finalPercentage").textContent = finalScore + "%";
+
+    if (finalScore >= 70) {
+        failedAttempts = 0;
+        document.getElementById("resultTitle").textContent = "Comunicação Estabelecida!";
+        document.getElementById("resultText").textContent = "Vocês conseguiram se entender com sucesso através da linguagem.";
+        nextChapterButton.hidden = false;
+    } else {
+        failedAttempts++;
+        document.getElementById("resultTitle").textContent = "Entendimento Insuficiente";
+        if (failedAttempts >= 3) {
+            document.getElementById("resultText").textContent = "A barreira linguística ainda foi muito alta. Depois de três tentativas, você pode jogar novamente ou continuar a história.";
+            nextChapterButton.hidden = false;
+        } else {
+            const remainingAttempts = 3 - failedAttempts;
+            document.getElementById("resultText").textContent = `A barreira linguística ainda foi muito alta. Tente novamente! O próximo capítulo será liberado após mais ${remainingAttempts} ${remainingAttempts === 1 ? "derrota" : "derrotas"}.`;
+            nextChapterButton.hidden = true;
+        }
+    }
+    resultOverlay.style.display = "flex";
+}
+
+function goToNextChapter() {
+    window.location.href = "../05/cap05.html";
+}
+
+function restartGame() {
+    gameWords = shuffle(wordBank).slice(0, 5);
+    currentQuestion = 0;
+    correctAnswers = 0;
+    percentage.textContent = "0%";
+    communicationFill.style.width = "0%";
+    resultOverlay.style.display = "none";
+    loadQuestion();
+}
+
+loadQuestion();
+</script>
+</body>
+</html>

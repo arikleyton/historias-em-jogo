@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Escambo: A Troca Desigual</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="game-container"></div>
+
+  <!-- Phaser 3 via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.90.0/dist/phaser.min.js"></script>
+
+  <!-- Helpers compartilhados -->
+  <script src="js/uiPanel.js?v=24"></script>
+  <script src="js/hud.js?v=24"></script>
+  <script src="js/mapButton.js?v=26"></script>
+
+  <!-- Cenas (ordem importa: precisam existir antes do main.js montar o config) -->
+  <script src="js/scenes/IntroScene.js?v=26"></script>
+  <script src="js/scenes/MapScene.js?v=24"></script>
+  <script src="js/scenes/ChopScene.js?v=24"></script>
+  <script src="js/scenes/MerchantScene.js?v=26"></script>
+
+  <!-- Configuracao e boot do jogo -->
+  <script src="js/main.js?v=24"></script>
+</body>
+</html>

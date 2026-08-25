@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Carta de Caminha — Quiz</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: #1a0e06; height: 100%; overflow: hidden; }
+    #game-container { width: 100vw; height: 100vh; }
+  </style>
+  <!-- Fonte arredondada estilo jogo (Fredoka/Nunito) com fallback offline -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+  <!-- Phaser 3 via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js"></script>
+
+  <!--
+    Ordem de carregamento (não há build: cada arquivo se registra em window).
+    Base primeiro, depois desenho e regras, e as cenas por último — elas são
+    as únicas que dependem de todo o resto.
+  -->
+  <script src="./src/config/gameConfig.js"></script>
+  <script src="./src/data/questions.js"></script>
+  <script src="./src/data/context.js"></script>
+  <script src="./src/audio/SoundKit.js"></script>
+  <script src="./src/render/IllustrationKit.js"></script>
+  <script src="./src/render/UIKit.js"></script>
+  <script src="./src/systems/QuizManager.js"></script>
+
+  <script src="./src/scenes/BootScene.js"></script>
+  <script src="./src/scenes/PreloadScene.js"></script>
+  <script src="./src/scenes/MenuScene.js"></script>
+  <script src="./src/scenes/ContextScene.js"></script>
+  <script src="./src/scenes/QuizScene.js"></script>
+  <script src="./src/scenes/ResultScene.js"></script>
+</head>
+<body>
+  <div id="game-container"></div>
+
+  <script>
+    window.addEventListener('load', () => {
+      window.gameInstance = new Phaser.Game(GameConfig.phaser());
+    });
+  </script>
+</body>
+</html>
